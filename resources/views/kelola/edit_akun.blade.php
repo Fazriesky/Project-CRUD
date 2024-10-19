@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mt-5">
-        <h2>Tambah Akun</h2>
+        <h2>Edit Akun</h2>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -10,9 +10,11 @@
             </div>
         @endif
 
-        <form action="{{ route('akun.update', $user->id) }}" method="POST">
+        <!-- Tambahkan id untuk form -->
+        <form id="editAccountForm" action="{{ route('akun.update', $user->id) }}" method="POST">
             @csrf
             @method('PATCH')
+
             <!-- Nama -->
             <div class="mb-3">
                 <label for="name" class="form-label">Nama</label>
@@ -31,7 +33,7 @@
                 @enderror
             </div>
 
-            <!-- Password -->
+            <!-- Password (Optional) -->
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" >
@@ -53,7 +55,29 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <!-- Hapus type="submit" dan tambahkan onclick -->
+            <button type="button" class="btn btn-primary" onclick="confirmEdit()">Simpan</button>
         </form>
     </div>
+
+    <!-- Tambahkan script SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmEdit() {
+            Swal.fire({
+                title: "Do you want to save the changes?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit form jika pengguna memilih 'Save'
+                    document.getElementById('editAccountForm').submit();
+                } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
+        }
+    </script>
 @endsection
