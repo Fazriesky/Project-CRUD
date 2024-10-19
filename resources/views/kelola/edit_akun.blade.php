@@ -10,9 +10,9 @@
             </div>
         @endif
 
-        <form action="{{ route('akun.store') }}" method="POST">
+        <form action="{{ route('akun.update', $user->id) }}" method="POST">
             @csrf
-        
+            @method('PATCH')
             <!-- Nama -->
             <div class="mb-3">
                 <label for="name" class="form-label">Nama</label>

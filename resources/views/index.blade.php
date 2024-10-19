@@ -18,8 +18,8 @@
                         </p>
 
                         <div class="text-center mt-4">
-                            <a href="kelola" class="btn btn-primary btn-lg shadow">Kelola Data Guru</a>
-                            <a href="#" class="btn btn-outline-primary btn-lg shadow">Tambah Guru Baru</a>
+                            <a href="guru" class="btn btn-primary btn-lg shadow">Kelola Data Guru</a>
+                            <a href="akun" class="btn btn-outline-primary btn-lg shadow">Kelola akun</a>
                         </div>
                     </div>
                 </div>

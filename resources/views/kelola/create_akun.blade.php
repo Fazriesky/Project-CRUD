@@ -10,9 +10,10 @@
             </div>
         @endif
 
-        <form action="{{ route('akun.store') }}" method="POST">
+        <!-- Tambahkan id untuk form -->
+        <form id="accountForm" action="{{ route('akun.store') }}" method="POST">
             @csrf
-        
+
             <!-- Nama -->
             <div class="mb-3">
                 <label for="name" class="form-label">Nama</label>
@@ -33,7 +34,7 @@
 
             <!-- Password -->
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password isi ini dengan 8 karakter" class="form-label">Password: (minimal 8 karakter)</label>
                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
                 @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -53,7 +54,32 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <!-- Hapus type="submit" dari tombol -->
+            <button type="button" class="btn btn-primary" onclick="confirmSave()">Simpan</button>
         </form>
     </div>
+
+    <!-- Tambahkan script SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmSave() {
+            Swal.fire({
+                title: "Apakah Anda yakin ingin menyimpan perubahan?",
+                icon: "warning",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Simpan",
+                denyButtonText: `Jangan Simpan`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jangan langsung submit, tunggu 1 detik dulu
+                    setTimeout(() => {
+                        document.getElementById('accountForm').submit();
+                    }, 1000);
+                } else if (result.isDenied) {
+                    Swal.fire("perubahan tidak di simpan", "", "info");
+                }
+            });
+        }
+    </script>
 @endsection
